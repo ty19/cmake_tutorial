@@ -1,14 +1,11 @@
-This example shows what a linker error is. During compilation, the 
-linker links together C++ object files to produce an executable. The
-linker cares about how something is implemented, so it needs
-to know where all the .cpp files are. 
+Now you may ask: If we need a.cpp, why don't we just include it?
+This can be done by adding #include "a.cpp" in hello.cpp.
 
-Suppose we want to use the class "a" in Hello.cpp. When we compile 
-hello.cpp, we need to give it a.cpp as well
+Try running "g++ -o hello hello.cpp". Since a.cpp is now included 
+in hello.cpp, everything should work, right? Nope, redefinition
+error! a.hpp is now included in both hello.cpp and a.cpp, and since
+hello.cpp includes a.cpp, there are two definitions of a in a.hpp. 
 
-Type "g++ -o hello hello.cpp" as before. It should give an error along the
-lines of "undefind reference to a::print()". The linker is complaining
-because it can't find where a::print() is implemented. Just knowing that
-a::print() exists from a.hpp is not enough.
-
-Type "g++ -o hello hello.cpp a.cpp". This should work.
+Note: You can actually make this example work by not including
+a.hpp in hello.cpp. But this isn't practical (or possible) for
+large projects.  
